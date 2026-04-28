@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DRAI Website</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+:root{
+  --bg:#000;
+  --text:#fff;
+  --accent:#00bfff;
+}
+
+body{
+  margin:0;
+  font-family:'Orbitron',sans-serif;
+  background: radial-gradient(circle at top,#0a0a2a,#000);
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+/* GALAXY LINES */
+.lines{
+  position:fixed;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+}
+.lines span{
+  position:absolute;
+  width:2px;
+  height:120px;
+  background:white;
+  animation:fall 3s linear infinite;
+  opacity:0.2;
+}
+@keyframes fall{
+  from{transform:translateY(-100px);}
+  to{transform:translateY(100vh);}
+}
+
+/* MENU */
+.menu{
+  position:fixed;
+  top:15px;
+  right:15px;
+  font-size:28px;
+  cursor:pointer;
+  z-index:1001;
+}
+
+/* PANEL */
+.panel{
+  position:fixed;
+  top:0;
+  right:0;
+  width:260px;
+  height:100%;
+  background:#111;
+  padding:20px;
+  transform:translateX(100%);
+  transition:0.4s;
+  z-index:1000;
+  box-shadow:-5px 0 20px rgba(0,0,0,0.7);
+}
+.panel.active{
+  transform:translateX(0);
+}
+
+.close-btn{
+  cursor:pointer;
+  margin-bottom:10px;
+  display:block;
+}
+
+/* HEADER */
+header{
+  text-align:center;
+  padding:30px;
+}
+h1{
+  font-size:42px;
+  color:#00bfff;
+  text-shadow:0 0 20px #00bfff;
+}
+.logo{
+  width:120px;
+}
+
+/* BUTTON */
+.btn{
+  background:linear-gradient(45deg,#007bff,#00cfff);
+  border:none;
+  padding:12px 20px;
+  margin:10px;
+  color:white;
+  border-radius:10px;
+  cursor:pointer;
+  box-shadow:0 0 15px #00bfff;
+}
+.btn:hover{
+  transform:scale(1.05);
+}
+
+/* POPUP */
+.popup{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  background:#111;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 0 20px #00bfff;
+  transition:0.3s;
+  z-index:999;
+}
+.popup.active{
+  transform:translate(-50%,-50%) scale(1);
+}
+
+/* FLOATING IMAGE */
+.floating{
+  position:fixed;
+  width:60px;
+  animation:fly 2s linear forwards;
+}
+@keyframes fly{
+  to{transform:translateY(-300px);opacity:0;}
+}
+
+/* TOGGLE */
+.toggle{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:black;
+  color:white;
+  padding:12px;
+  border-radius:50%;
+  cursor:pointer;
+  z-index:999;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:30px;
+  opacity:0.8;
+}
+
+#jumpscare{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  opacity:0;
+  pointer-events:none;
+  transition:0.3s;
+}
+#jumpscare{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  opacity:0;
+  pointer-events:none;
+  transition:0.2s;
+}
+
+#jumpscare img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform:scale(0.6);
+  transition:0.2s;
+}
+
+#jumpscare.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+#jumpscare.active img{
+  transform:scale(1);
+}
+
+
+</style>
+</head>
+
+<body onclick="clickEffect(event)">
+
+<div class="lines" id="lines"></div>
+
+<!-- MENU -->
+<div class="menu" onclick="toggleMenu()">☰</div>
+
+<div class="panel" id="panel" onclick="event.stopPropagation()">
+  <span class="close-btn" onclick="toggleMenu()">✖ Tutup</span>
+
+  <h3>Ubah Warna</h3>
+  <button class="btn" onclick="setTheme('#5a3d00')">Kuning Tua</button>
+  <button class="btn" onclick="setTheme('#3b2a1a')">Cokelat</button>
+  <button class="btn" onclick="setTheme('#001f3f')">Biru</button>
+  <button class="btn" onclick="setTheme('#3f0000')">Merah</button>
+  <button class="btn" onclick="setTheme('#3f003f')">Pink</button>
+  <button class="btn" onclick="setTheme('#000')">Hitam</button>
+
+  <p style="margin-top:20px;">By RaXzz 2026</p>
+</div>
+
+<header>
+  <h1>D.DRAI FAMILY</h1>
+  <img class="logo" src="https://files.catbox.moe/7ivkpl.png">
+  <p>Apa Itu DRAi?<br>D.DRAI adalah singkatan dari Danz, Dikzz, Razz, Ahmadzz, Isanzz</p>
+</header>
+
+<center>
+
+<button class="btn" onclick="showPopup('Dani adalah sosok kuat dan penuh semangat!')">Arti Dani</button>
+<button class="btn" onclick="showPopup('Dika adalah orang cerdas dan kreatif!')">Arti Dika</button>
+<button class="btn" onclick="showPopup('Razma adalah developer keren dan visioner!')">Arti Razma</button>
+<button class="btn" onclick="showPopup('Ahmad adalah pribadi bijak dan tenang!')">Arti Ahmad</button>
+<button class="btn" onclick="showPopup('Isan adalah orang santai tapi hebat!')">Arti Isan</button>
+
+<br><br>
+
+<button class="btn" onclick="spawnMany()">Klik Saya (Dika)</button>
+
+</center>
+
+<div class="popup" id="popup"></div>
+
+<div class="toggle" onclick="toggleMode()">☯</div>
+
+<div id="jumpscare">
+  <img src="https://files.catbox.moe/f97ylh.jpg">
+</div>
+
+<footer>
+<p>LIST NAMA D.R.A.I</p>
+<p>Danzz <?></p>
+<p>DIkzz <?></p>
+<p>RaXzz &lt;Dev Web&gt;</p>
+<p>Ahmad <?></p>
+<p>Isanzz <?></p>
+</footer>
+
+<script>
+
+// galaxy lines
+for(let i=0;i<30;i++){
+  let s=document.createElement("span");
+  s.style.left=Math.random()*100+"%";
+  s.style.animationDuration=(2+Math.random()*3)+"s";
+  document.getElementById("lines").appendChild(s);
+}
+
+// popup
+function showPopup(text){
+  let p=document.getElementById("popup");
+  p.innerHTML=text+"<br><br><button onclick='closePopup()'>Tutup</button>";
+  p.classList.add("active");
+}
+function closePopup(){
+  document.getElementById("popup").classList.remove("active");
+}
+
+// menu
+function toggleMenu(){
+  document.getElementById("panel").classList.toggle("active");
+}
+
+// klik luar tutup panel
+document.addEventListener("click", function(e){
+  const panel = document.getElementById("panel");
+  const menu = document.querySelector(".menu");
+
+  if(!panel.contains(e.target) && !menu.contains(e.target)){
+    panel.classList.remove("active");
+  }
+});
+
+// theme
+function setTheme(color){
+  document.body.style.background=color;
+}
+
+// click 1 efek
+function clickEffect(e){
+  let img=document.createElement("img");
+  img.src="https://files.catbox.moe/f97ylh.jpg";
+  img.className="floating";
+  img.style.left=e.clientX+"px";
+  img.style.top=e.clientY+"px";
+  document.body.appendChild(img);
+  setTimeout(()=>img.remove(),2000);
+}
+
+// banyak efek
+function spawnMany(){
+  for(let i=0;i<15;i++){
+    let img=document.createElement("img");
+    img.src="https://files.catbox.moe/f97ylh.jpg";
+    img.className="floating";
+    img.style.left=Math.random()*100+"%";
+    img.style.top="80%";
+    document.body.appendChild(img);
+    setTimeout(()=>img.remove(),2000);
+  }
+}
+
+// dark/light
+let dark=true;
+function toggleMode(){
+  dark=!dark;
+  document.body.style.background=dark?'#000':'#fff';
+  document.body.style.color=dark?'#fff':'#000';
+}
+
+const jumpscare = document.getElementById("jumpscare");
+
+function showJumpscare(){
+  jumpscare.classList.add("active");
+
+  // hilang setelah 2 detik
+  setTimeout(()=>{
+    jumpscare.classList.remove("active");
+  },2000);
+}
+
+// pertama muncul setelah 5 detik
+setTimeout(()=>{
+  showJumpscare();
+
+  // lalu ulang tiap 15 detik
+  setInterval(showJumpscare,15000);
+
+},5000);
+
+
+</script>
+
+</body>
+</html>
